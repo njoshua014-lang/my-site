@@ -1,204 +1,169 @@
-/* Joshua Nathaniel — Scratch Page Stylesheet */
-/* scratch.css — custom stylesheet, linked from scratch.html */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guitar — Joshua Nathaniel</title>
+  <!-- Custom stylesheet linked from scratch -->
+  <link rel="stylesheet" href="scratch.css" />
+</head>
+<body>
 
-/* === GLOBAL === */
-body {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  background-color: #1a1a2e;
-  color: #e0d9cc;
-  margin: 0;
-  padding: 0;
-  line-height: 1.8;
-}
+<!-- DIV 1: Navigation -->
+<div class="scratch-nav">
+  <span class="gold-text" style="font-size:1.1rem;">🎸 Joshua's Guitar Page</span>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="app.html">Guitar App</a>
+    <a href="#about">About</a>
+    <a href="#chords">Chords</a>
+    <a href="#video">Watch</a>
+    <a href="#tableau">Data</a>
+  </div>
+</div>
 
-h1, h2, h3 {
-  font-family: 'Trebuchet MS', 'Arial', sans-serif;
-  color: #f0c040;
-  letter-spacing: 0.05em;
-}
+<!-- DIV 2: Hero -->
+<div class="scratch-hero">
+  <h1>🎸 The Guitar</h1>
+  <p>Six strings. Infinite possibilities. My passion for guitar shapes how I think, create, and connect with the world.</p>
+</div>
 
-a {
-  color: #f0c040;
-  text-decoration: none;
-}
+<!-- DIV 3: Main content -->
+<div class="scratch-content">
 
-a:hover {
-  color: #ffffff;
-  text-decoration: underline;
-}
+  <!-- ON-PAGE ANCHOR TARGET: About -->
+  <div class="scratch-card" id="about">
+    <h2>Why Guitar?</h2>
+    <p>
+      Guitar isn't just a hobby — it's a discipline. Learning to play taught me patience, persistence, and the satisfaction of gradual mastery. The same qualities that make a great guitarist make a great professional: deliberate practice, attention to detail, and the ability to read the room.
+    </p>
+    <!-- IMAGE (not from Bootstrap theme) -->
+    <img
+      class="scratch-img"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/GuitareClassique5.png/440px-GuitareClassique5.png"
+      alt="Classical acoustic guitar"
+    />
+    <p class="muted-text">A classical acoustic guitar — the foundation of most playing styles.</p>
+  </div>
 
-/* === DIVS / LAYOUT BLOCKS === */
+  <!-- SECTION: Learning Path with NESTED LISTS (ordered list containing unordered list) -->
+  <div class="scratch-card" id="chords">
+    <h2>The Guitar Learning Path</h2>
+    <p>Most guitarists follow a progression like this. Each stage unlocks new possibilities:</p>
 
-/* DIV 1: Top navigation bar */
-.scratch-nav {
-  background-color: #0f0f1a;
-  padding: 14px 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 2px solid #f0c040;
-}
+    <!-- ORDERED LIST containing UNORDERED LISTS (nested as required) -->
+    <ol class="learning-path">
+      <li>
+        <span class="white-text">Open Chords</span> — The starting point for every guitarist.
+        <ul class="guitar-list">
+          <li>E major and E minor</li>
+          <li>A major, A minor, and A7</li>
+          <li>G, C, D — the "campfire" chords</li>
+          <li>F major (the first real challenge)</li>
+        </ul>
+      </li>
+      <li>
+        <span class="white-text">Barre Chords</span> — Movable shapes that unlock the whole fretboard.
+        <ul class="guitar-list">
+          <li>E-shape barre chord</li>
+          <li>A-shape barre chord</li>
+          <li>Minor and dominant 7th variations</li>
+        </ul>
+      </li>
+      <li>
+        <span class="white-text">Scales & Lead Playing</span> — Moving beyond chords.
+        <ul class="guitar-list">
+          <li>Pentatonic minor scale (most used in rock)</li>
+          <li>Major scale and its modes</li>
+          <li>Blues scale</li>
+        </ul>
+      </li>
+      <li>
+        <span class="white-text">Music Theory</span> — Understanding why it works.
+        <ul class="guitar-list">
+          <li>Key signatures and chord families</li>
+          <li>The CAGED system</li>
+          <li>Reading chord charts and tabs</li>
+        </ul>
+      </li>
+    </ol>
 
-.scratch-nav a {
-  color: #f0c040;
-  margin-left: 20px;
-  font-family: 'Trebuchet MS', sans-serif;
-  font-size: 0.95rem;
-  font-weight: bold;
-}
+    <p>Want to find chords fast? <a href="app.html" class="gold-text">Try my Guitar Chord Finder app →</a></p>
+    <a href="app.html" class="app-btn">Open Chord Finder App</a>
+  </div>
 
-/* DIV 2: Hero / header block */
-.scratch-hero {
-  background-image: linear-gradient(to bottom, #1a1a2e, #0f0f1a);
-  text-align: center;
-  padding: 80px 20px 60px;
-  border-bottom: 1px solid #333;
-}
+  <!-- ON-PAGE ANCHOR: Video section -->
+  <div class="scratch-card" id="video">
+    <h2>Watch &amp; Learn</h2>
+    <p>Here's one of the best beginner guitar lessons on YouTube — Justin Guitar is legendary for teaching millions of people to play:</p>
 
-.scratch-hero h1 {
-  font-size: 3rem;
-  color: #f0c040;
-  margin-bottom: 12px;
-}
+    <!-- EMBEDDED YOUTUBE VIDEO -->
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.youtube.com/embed/QpB_40tqjys"
+        title="Justin Guitar Beginner Course"
+        allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      ></iframe>
+    </div>
 
-.scratch-hero p {
-  color: #aaa;
-  font-size: 1.15rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
+    <p class="muted-text">Justin Guitar's beginner course — free, comprehensive, and trusted by millions of players worldwide.</p>
+  </div>
 
-/* DIV 3: Main content area */
-.scratch-content {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 50px 24px;
-}
+  <!-- ON-PAGE ANCHOR: Tableau section -->
+  <div class="scratch-card" id="tableau">
+    <h2>Guitar's Global Reach — Interactive Data</h2>
+    <p>Music is a global language. The interactive Tableau visualization below explores music trends and data around the world. Use the filters and hover over data points to explore:</p>
 
-/* DIV 4: Section cards */
-.scratch-card {
-  background-color: #22223a;
-  border-left: 4px solid #f0c040;
-  border-radius: 4px;
-  padding: 28px 32px;
-  margin-bottom: 40px;
-}
+    <!-- LIVE TABLEAU EMBED -->
+    <div class="tableau-wrapper">
+      <div class='tableauPlaceholder' id='viz1' style='position: relative; width: 100%; height: 527px;'>
+        <noscript>
+          <a href='#'>
+            <img alt='Music Streaming Dashboard' src='https://public.tableau.com/static/images/Mu/MusicStreamingDashboard_17123577569980/MusicStreamingDashboard/1_rss.png' style='border: none' />
+          </a>
+        </noscript>
+        <object class='tableauViz' style='display:none;'>
+          <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+          <param name='embed_code_version' value='3' />
+          <param name='site_root' value='' />
+          <param name='name' value='MusicStreamingDashboard_17123577569980/MusicStreamingDashboard' />
+          <param name='tabs' value='no' />
+          <param name='toolbar' value='yes' />
+          <param name='static_image' value='https://public.tableau.com/static/images/Mu/MusicStreamingDashboard_17123577569980/MusicStreamingDashboard/1.png' />
+          <param name='animate_transition' value='yes' />
+          <param name='display_static_image' value='yes' />
+          <param name='display_spinner' value='yes' />
+          <param name='display_overlay' value='yes' />
+          <param name='display_count' value='yes' />
+          <param name='language' value='en-US' />
+        </object>
+      </div>
+      <script type='text/javascript'>
+        var divElement = document.getElementById('viz1');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        vizElement.style.width = '100%';
+        vizElement.style.height = '527px';
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);
+      </script>
+    </div>
+  </div>
 
-/* DIV 5: Footer */
-.scratch-footer {
-  background-color: #0f0f1a;
-  text-align: center;
-  padding: 30px;
-  border-top: 2px solid #f0c040;
-  color: #666;
-  font-size: 0.85rem;
-  font-family: 'Trebuchet MS', sans-serif;
-}
+  <!-- Navigation back to main pages -->
+  <div style="text-align:center; padding: 20px 0 40px;">
+    <a href="index.html" class="app-btn" style="margin-right:12px;">← Back to Main Site</a>
+    <a href="app.html" class="app-btn">Guitar Chord App 🎸</a>
+  </div>
 
-/* === TYPOGRAPHY === */
+</div><!-- end scratch-content -->
 
-/* Font color: gold headings */
-.gold-text {
-  color: #f0c040;
-  font-family: 'Trebuchet MS', sans-serif;
-}
+<!-- DIV 5: Footer -->
+<div class="scratch-footer">
+  <p>Joshua Nathaniel &mdash; BYU Political Science &mdash; Guitar Enthusiast</p>
+  <p><a href="index.html">Main Site</a> &nbsp;|&nbsp; <a href="app.html">Chord Finder App</a></p>
+</div>
 
-/* Font color: muted subtext */
-.muted-text {
-  color: #888;
-  font-size: 0.9rem;
-}
-
-/* Font family: monospace for chord names */
-.chord-label {
-  font-family: 'Courier New', Courier, monospace;
-  color: #f0c040;
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-/* Font color: white emphasis */
-.white-text {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-/* Unordered / ordered lists */
-ul.guitar-list {
-  list-style: disc;
-  padding-left: 24px;
-  color: #ccc;
-}
-
-ol.learning-path {
-  padding-left: 24px;
-  color: #e0d9cc;
-}
-
-ol.learning-path li {
-  margin-bottom: 10px;
-}
-
-/* Image styling */
-.scratch-img {
-  width: 100%;
-  max-width: 700px;
-  border-radius: 4px;
-  border: 2px solid #f0c040;
-  display: block;
-  margin: 20px auto;
-}
-
-/* YouTube embed wrapper */
-.video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  border: 2px solid #f0c040;
-  border-radius: 4px;
-  margin: 20px 0;
-}
-
-.video-wrapper iframe {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  border: none;
-}
-
-/* Tableau embed */
-.tableau-wrapper {
-  border: 2px solid #f0c040;
-  border-radius: 4px;
-  overflow: hidden;
-  margin: 20px 0;
-}
-
-/* Anchor target highlight */
-:target {
-  scroll-margin-top: 80px;
-}
-
-/* App link button */
-.app-btn {
-  display: inline-block;
-  background: #f0c040;
-  color: #1a1a2e;
-  padding: 12px 28px;
-  border-radius: 3px;
-  font-family: 'Trebuchet MS', sans-serif;
-  font-weight: bold;
-  font-size: 1rem;
-  margin-top: 10px;
-  transition: background 0.2s;
-}
-
-.app-btn:hover {
-  background: #d4a820;
-  color: #0f0f1a;
-  text-decoration: none;
-}
+</body>
+</html>
