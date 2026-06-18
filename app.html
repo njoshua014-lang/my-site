@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guitar Chord Finder | Joshua Nathaniel</title>
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --surface: #22223a;
+      --gold: #f0c040;
+      --gold-dark: #c9952a;
+      --text: #e0d9cc;
+      --muted: #888;
+      --string: #ccc;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Trebuchet MS', Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: #0f0f1a;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--gold);
+    }
+    nav a { color: var(--gold); text-decoration: none; font-weight: bold; }
+    nav a:hover { color: white; }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: var(--gold);
+      font-size: 2.4rem;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 40px;
+      font-size: 1rem;
+    }
+
+    /* SEARCH BAR */
+    .search-area {
+      background: var(--surface);
+      border: 2px solid var(--gold);
+      border-radius: 6px;
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+
+    .search-area label {
+      display: block;
+      color: var(--gold);
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    select, input[type="text"] {
+      background: #0f0f1a;
+      color: var(--text);
+      border: 1px solid #555;
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    select:focus, input[type="text"]:focus {
+      outline: 2px solid var(--gold);
+      border-color: var(--gold);
+    }
+
+    select { min-width: 140px; }
+
+    .btn {
+      background: var(--gold);
+      color: #1a1a2e;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: var(--gold-dark); }
+
+    /* CHORD DISPLAY */
+    .chord-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .chord-card {
+      background: var(--surface);
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 20px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.1s;
+    }
+    .chord-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .chord-name {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .chord-type {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* SVG CHORD DIAGRAM */
+    .chord-diagram svg {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .fingers {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* STATUS */
+    .status-msg {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+      padding: 40px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+    }
+    .spinner {
+      display: inline-block;
+      width: 36px;
+      height: 36px;
+      border: 4px solid #333;
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin-bottom: 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid #333;
+      margin-top: 60px;
+    }
+    footer a { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span>🎸 Guitar Chord Finder</span>
+  <div>
+    <a href="index.html" style="margin-right:16px;">Main Site</a>
+    <a href="scratch.html">Guitar Page</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>🎸 Guitar Chord Finder</h1>
+  <p class="subtitle">Search any chord and get fingering diagrams, positions, and music theory info.</p>
+
+  <div class="search-area">
+    <label>Select a root note and chord type</label>
+    <div class="input-row">
+      <select id="noteSelect">
+        <option value="">Note...</option>
+        <option>C</option><option>C#</option><option>D</option>
+        <option>D#</option><option>E</option><option>F</option>
+        <option>F#</option><option>G</option><option>G#</option>
+        <option>A</option><option>A#</option><option>B</option>
+      </select>
+      <select id="typeSelect">
+        <option value="">Type...</option>
+        <option value="major">Major</option>
+        <option value="minor">Minor</option>
+        <option value="7">Dominant 7th</option>
+        <option value="maj7">Major 7th</option>
+        <option value="min7">Minor 7th</option>
+        <option value="sus2">Sus2</option>
+        <option value="sus4">Sus4</option>
+        <option value="dim">Diminished</option>
+        <option value="aug">Augmented</option>
+      </select>
+      <button class="btn" onclick="findChord()">Find Chord</button>
+    </div>
+  </div>
+
+  <div id="output">
+    <p class="status-msg">Select a note and chord type above, then click <strong style="color:var(--gold)">Find Chord</strong>.</p>
+  </div>
+</div>
+
+<footer>
+  <p>Built by Joshua Nathaniel in collaboration with AI &mdash; BYU 2026</p>
+  <p><a href="scratch.html">← Back to Guitar Page</a></p>
+</footer>
+
+<script>
+// ── CHORD DATABASE ──────────────────────────────────────────────────────────
+// frets: array of 6 strings (low E to high e)
+// -1 = muted (X), 0 = open, 1-5 = fret number
+// fingers: which finger on each string (0 = open/muted)
+const CHORDS = {
+  "C major":   { frets:[0,3,2,0,1,0], fingers:[0,3,2,0,1,0], notes:["C","E","G"],       desc:"The most common open chord. Warm and bright." },
+  "C minor":   { frets:[-1,3,5,5,4,3], fingers:[0,1,3,4,2,1], notes:["C","Eb","G"],     desc:"A barre chord version. Dark and emotional." },
+  "C 7":       { frets:[0,3,2,3,1,0], fingers:[0,3,2,4,1,0], notes:["C","E","G","Bb"],  desc:"Dominant 7th — bluesy and unresolved feeling." },
+  "C maj7":    { frets:[0,3,2,0,0,0], fingers:[0,3,2,0,0,0], notes:["C","E","G","B"],   desc:"Dreamy and sophisticated. Common in jazz." },
+  "C min7":    { frets:[0,3,1,0,4,3], fingers:[0,2,1,0,4,3], notes:["C","Eb","G","Bb"], desc:"Smooth and soulful. Great for R&B." },
+  "C sus2":    { frets:[0,3,0,0,3,3], fingers:[0,2,0,0,3,4], notes:["C","D","G"],       desc:"Ambiguous and open-sounding. No major/minor." },
+  "C sus4":    { frets:[0,3,3,0,1,1], fingers:[0,2,3,0,1,1], notes:["C","F","G"],       desc:"Suspended — creates tension wanting resolution." },
+  "C dim":     { frets:[0,3,4,5,4,3], fingers:[0,1,2,4,3,1], notes:["C","Eb","Gb"],     desc:"Tense and dramatic. Classic in classical music." },
+  "C aug":     { frets:[0,3,2,1,1,0], fingers:[0,4,3,2,1,0], notes:["C","E","G#"],      desc:"Unsettling and dreamlike. Used in jazz and pop." },
+
+  "D major":   { frets:[-1,-1,0,2,3,2], fingers:[0,0,0,1,3,2], notes:["D","F#","A"],    desc:"Open and resonant. Essential beginner chord." },
+  "D minor":   { frets:[-1,-1,0,2,3,1], fingers:[0,0,0,2,3,1], notes:["D","F","A"],     desc:"Melancholic and expressive." },
+  "D 7":       { frets:[-1,-1,0,2,1,2], fingers:[0,0,0,2,1,3], notes:["D","F#","A","C"],desc:"Bluesy 7th. Great for country and blues." },
+  "D maj7":    { frets:[-1,-1,0,2,2,2], fingers:[0,0,0,2,3,4], notes:["D","F#","A","C#"],desc:"Lush and jazzy." },
+  "D min7":    { frets:[-1,-1,0,2,1,1], fingers:[0,0,0,2,1,1], notes:["D","F","A","C"], desc:"Smooth minor 7th. Very common in jazz." },
+  "D sus2":    { frets:[-1,-1,0,2,3,0], fingers:[0,0,0,1,3,0], notes:["D","E","A"],     desc:"Open and airy. Great for acoustic songs." },
+  "D sus4":    { frets:[-1,-1,0,2,3,3], fingers:[0,0,0,1,3,4], notes:["D","G","A"],     desc:"Classic rock sound — think 'Pinball Wizard'." },
+  "D dim":     { frets:[-1,-1,0,1,3,1], fingers:[0,0,0,1,3,2], notes:["D","F","Ab"],    desc:"Tense diminished voicing." },
+  "D aug":     { frets:[-1,-1,0,3,3,2], fingers:[0,0,0,3,4,2], notes:["D","F#","A#"],   desc:"Augmented — raises the 5th for drama." },
+
+  "E major":   { frets:[0,2,2,1,0,0], fingers:[0,2,3,1,0,0], notes:["E","G#","B"],      desc:"The most powerful open chord. Full and rich." },
+  "E minor":   { frets:[0,2,2,0,0,0], fingers:[0,2,3,0,0,0], notes:["E","G","B"],       desc:"Easy two-finger chord. Deep and mournful." },
+  "E 7":       { frets:[0,2,0,1,0,0], fingers:[0,2,0,1,0,0], notes:["E","G#","B","D"],  desc:"Classic blues chord. Instantly recognizable." },
+  "E maj7":    { frets:[0,2,1,1,0,0], fingers:[0,2,1,1,0,0], notes:["E","G#","B","D#"], desc:"Beautiful open voicing. Common in folk." },
+  "E min7":    { frets:[0,2,0,0,0,0], fingers:[0,2,0,0,0,0], notes:["E","G","B","D"],   desc:"Easy and smooth. Just one finger needed!" },
+  "E sus2":    { frets:[0,2,2,4,0,0], fingers:[0,1,2,4,0,0], notes:["E","F#","B"],      desc:"Floaty, suspended sound." },
+  "E sus4":    { frets:[0,2,2,2,0,0], fingers:[0,1,2,3,0,0], notes:["E","A","B"],       desc:"Big open sus4 voicing." },
+  "E dim":     { frets:[0,1,2,0,3,3], fingers:[0,1,2,0,3,4], notes:["E","G","Bb"],      desc:"Diminished tension." },
+  "E aug":     { frets:[0,3,2,1,0,0], fingers:[0,4,3,2,0,0], notes:["E","G#","C"],      desc:"Augmented — used in jazz and classical." },
+
+  "G major":   { frets:[3,2,0,0,0,3], fingers:[2,1,0,0,0,3], notes:["G","B","D"],       desc:"One of the most common open chords. Full sound." },
+  "G minor":   { frets:[3,5,5,3,3,3], fingers:[1,3,4,1,1,1], notes:["G","Bb","D"],      desc:"Barre chord version. Deep and resonant." },
+  "G 7":       { frets:[3,2,0,0,0,1], fingers:[3,2,0,0,0,1], notes:["G","B","D","F"],   desc:"Dominant 7th. Common in blues progressions." },
+  "G maj7":    { frets:[3,2,0,0,0,2], fingers:[3,2,0,0,0,1], notes:["G","B","D","F#"],  desc:"Beautiful, sophisticated voicing." },
+  "G min7":    { frets:[3,5,3,3,3,3], fingers:[1,3,1,1,1,1], notes:["G","Bb","D","F"],  desc:"Smooth minor 7th barre chord." },
+  "G sus2":    { frets:[3,0,0,0,3,3], fingers:[2,0,0,0,3,4], notes:["G","A","D"],       desc:"Open, beautiful suspended chord." },
+  "G sus4":    { frets:[3,3,0,0,1,3], fingers:[3,4,0,0,1,2], notes:["G","C","D"],       desc:"Sustained, unresolved feeling." },
+  "G dim":     { frets:[3,4,5,3,-1,-1], fingers:[1,2,3,1,0,0], notes:["G","Bb","Db"],   desc:"Tense diminished chord." },
+  "G aug":     { frets:[3,2,1,0,0,3], fingers:[4,3,2,0,0,1], notes:["G","B","D#"],      desc:"Augmented 5th — dramatic effect." },
+
+  "A major":   { frets:[-1,0,2,2,2,0], fingers:[0,0,1,2,3,0], notes:["A","C#","E"],     desc:"Open A. Bright and versatile." },
+  "A minor":   { frets:[-1,0,2,2,1,0], fingers:[0,0,2,3,1,0], notes:["A","C","E"],      desc:"Open Am. One of the first chords you learn." },
+  "A 7":       { frets:[-1,0,2,0,2,0], fingers:[0,0,2,0,3,0], notes:["A","C#","E","G"], desc:"Easy open dominant 7th." },
+  "A maj7":    { frets:[-1,0,2,1,2,0], fingers:[0,0,3,1,4,0], notes:["A","C#","E","G#"],desc:"Jazzy and sophisticated open chord." },
+  "A min7":    { frets:[-1,0,2,0,1,0], fingers:[0,0,2,0,1,0], notes:["A","C","E","G"],  desc:"Smooth and mellow. Very common." },
+  "A sus2":    { frets:[-1,0,2,2,0,0], fingers:[0,0,1,2,0,0], notes:["A","B","E"],      desc:"Sparkly open suspended chord." },
+  "A sus4":    { frets:[-1,0,2,2,3,0], fingers:[0,0,1,2,3,0], notes:["A","D","E"],      desc:"Classic sus4 voicing." },
+  "A dim":     { frets:[-1,0,1,2,1,0], fingers:[0,0,1,3,2,0], notes:["A","C","Eb"],     desc:"Tense diminished." },
+  "A aug":     { frets:[-1,0,3,2,2,1], fingers:[0,0,4,2,3,1], notes:["A","C#","E#"],    desc:"Augmented A chord." },
+
+  "B major":   { frets:[-1,2,4,4,4,2], fingers:[0,1,3,3,3,1], notes:["B","D#","F#"],    desc:"Barre chord at 2nd fret. Common in songs using A and E." },
+  "B minor":   { frets:[-1,2,4,4,3,2], fingers:[0,1,3,4,2,1], notes:["B","D","F#"],     desc:"Common barre chord. Dark and intense." },
+  "B 7":       { frets:[-1,2,1,2,0,2], fingers:[0,2,1,3,0,4], notes:["B","D#","F#","A"],desc:"Punchy dominant 7th. Used in many blues progressions." },
+  "B maj7":    { frets:[-1,2,4,3,4,2], fingers:[0,1,3,2,4,1], notes:["B","D#","F#","A#"],desc:"Rich major 7th barre chord." },
+  "B min7":    { frets:[-1,2,4,2,3,2], fingers:[0,1,3,1,2,1], notes:["B","D","F#","A"], desc:"Smooth minor 7th. Great for jazz and R&B." },
+  "B sus2":    { frets:[-1,2,4,4,2,2], fingers:[0,1,3,4,1,1], notes:["B","C#","F#"],    desc:"Floating suspended quality." },
+  "B sus4":    { frets:[-1,2,4,4,5,2], fingers:[0,1,2,3,4,1], notes:["B","E","F#"],     desc:"Suspended 4th barre voicing." },
+  "B dim":     { frets:[-1,2,3,4,3,2], fingers:[0,1,2,4,3,1], notes:["B","D","F"],      desc:"Diminished tension on the 2nd fret." },
+  "B aug":     { frets:[-1,2,1,0,0,3], fingers:[0,3,2,0,0,4], notes:["B","D#","G"],     desc:"Augmented B chord." },
+
+  // Sharps/flats map to enharmonic equivalents above for simplicity
+  "C# major":  { frets:[-1,4,6,6,6,4], fingers:[0,1,3,3,3,1], notes:["C#","F","G#"],    desc:"Barre chord at 4th fret. Also written as Db major." },
+  "C# minor":  { frets:[-1,4,6,6,5,4], fingers:[0,1,3,4,2,1], notes:["C#","E","G#"],    desc:"Also written as Db minor." },
+  "D# major":  { frets:[-1,6,8,8,8,6], fingers:[0,1,3,3,3,1], notes:["D#","G","A#"],    desc:"Also written as Eb major." },
+  "D# minor":  { frets:[-1,6,8,8,7,6], fingers:[0,1,3,4,2,1], notes:["D#","F#","A#"],   desc:"Also written as Eb minor." },
+  "F major":   { frets:[1,3,3,2,1,1],  fingers:[1,3,4,2,1,1], notes:["F","A","C"],      desc:"The notorious F barre chord. Every beginner's first test!" },
+  "F minor":   { frets:[1,3,3,1,1,1],  fingers:[1,3,4,1,1,1], notes:["F","Ab","C"],     desc:"Full barre minor at 1st fret." },
+  "F# major":  { frets:[2,4,4,3,2,2],  fingers:[1,3,4,2,1,1], notes:["F#","A#","C#"],   desc:"Also written as Gb major. Barre at 2nd fret." },
+  "F# minor":  { frets:[2,4,4,2,2,2],  fingers:[1,3,4,1,1,1], notes:["F#","A","C#"],    desc:"Common barre chord. Used in many pop songs." },
+  "G# major":  { frets:[4,6,6,5,4,4],  fingers:[1,3,4,2,1,1], notes:["G#","C","D#"],    desc:"Also written as Ab major." },
+  "G# minor":  { frets:[4,6,6,4,4,4],  fingers:[1,3,4,1,1,1], notes:["G#","B","D#"],    desc:"Also written as Ab minor." },
+  "A# major":  { frets:[-1,1,3,3,3,1], fingers:[0,1,3,3,3,1], notes:["A#","D","F"],     desc:"Also written as Bb major." },
+  "A# minor":  { frets:[-1,1,3,3,2,1], fingers:[0,1,3,4,2,1], notes:["A#","C#","F"],    desc:"Also written as Bb minor." },
+};
+
+// ── DRAW CHORD DIAGRAM ──────────────────────────────────────────────────────
+function drawChord(frets) {
+  const W = 160, H = 140;
+  const stringSpacing = 20;
+  const fretSpacing = 24;
+  const startX = 28, startY = 36;
+  const numStrings = 6, numFrets = 5;
+
+  // Find the minimum fret (excluding 0 and -1) to determine position
+  const playedFrets = frets.filter(f => f > 0);
+  let minFret = playedFrets.length ? Math.min(...playedFrets) : 1;
+  let maxFret = playedFrets.length ? Math.max(...playedFrets) : 5;
+  let position = minFret > 1 ? minFret : 1;
+  if (maxFret - position > 4) position = minFret;
+
+  let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+
+  // Fret position label
+  if (position > 1) {
+    svg += `<text x="${startX - 8}" y="${startY + 6}" font-size="11" fill="#f0c040" text-anchor="end" font-family="monospace">${position}fr</text>`;
+  }
+
+  // Draw nut (thick top bar) if at position 1
+  if (position === 1) {
+    svg += `<rect x="${startX}" y="${startY - 6}" width="${(numStrings-1)*stringSpacing}" height="5" fill="#e0d9cc" rx="1"/>`;
+  }
+
+  // Draw fret lines
+  for (let f = 0; f <= numFrets; f++) {
+    const y = startY + f * fretSpacing;
+    svg += `<line x1="${startX}" y1="${y}" x2="${startX + (numStrings-1)*stringSpacing}" y2="${y}" stroke="#555" stroke-width="1"/>`;
+  }
+
+  // Draw strings
+  for (let s = 0; s < numStrings; s++) {
+    const x = startX + s * stringSpacing;
+    svg += `<line x1="${x}" y1="${startY}" x2="${x}" y2="${startY + numFrets * fretSpacing}" stroke="#ccc" stroke-width="1.5"/>`;
+  }
+
+  // Draw open/muted markers above nut
+  for (let s = 0; s < numStrings; s++) {
+    const x = startX + s * stringSpacing;
+    const f = frets[s];
+    if (f === -1) {
+      // Muted (X)
+      svg += `<text x="${x}" y="${startY - 10}" font-size="13" fill="#888" text-anchor="middle" font-family="monospace">✕</text>`;
+    } else if (f === 0) {
+      // Open (O)
+      svg += `<circle cx="${x}" cy="${startY - 12}" r="6" fill="none" stroke="#f0c040" stroke-width="1.5"/>`;
+    }
+  }
+
+  // Draw finger dots
+  for (let s = 0; s < numStrings; s++) {
+    const f = frets[s];
+    if (f > 0) {
+      const adjustedFret = f - position + 1;
+      if (adjustedFret >= 1 && adjustedFret <= numFrets) {
+        const cx = startX + s * stringSpacing;
+        const cy = startY + (adjustedFret - 0.5) * fretSpacing;
+        svg += `<circle cx="${cx}" cy="${cy}" r="9" fill="#f0c040"/>`;
+      }
+    }
+  }
+
+  svg += `</svg>`;
+  return svg;
+}
+
+// ── MAIN FIND FUNCTION ───────────────────────────────────────────────────────
+async function findChord() {
+  const note = document.getElementById('noteSelect').value;
+  const type = document.getElementById('typeSelect').value;
+
+  if (!note || !type) {
+    document.getElementById('output').innerHTML = `<p class="status-msg">Please select both a <strong style="color:var(--gold)">note</strong> and a <strong style="color:var(--gold)">chord type</strong>.</p>`;
+    return;
+  }
+
+  const typeLabels = {
+    major:'Major', minor:'Minor', '7':'Dominant 7th',
+    maj7:'Major 7th', min7:'Minor 7th', sus2:'Sus2',
+    sus4:'Sus4', dim:'Diminished', aug:'Augmented'
+  };
+
+  document.getElementById('output').innerHTML = `
+    <div class="loading">
+      <div class="spinner"></div>
+      <p style="color:var(--muted)">Looking up ${note} ${typeLabels[type]}...</p>
+    </div>`;
+
+  // Try direct lookup first
+  const key = `${note} ${type}`;
+  const chord = CHORDS[key];
+
+  await new Promise(r => setTimeout(r, 400)); // brief visual delay
+
+  if (chord) {
+    renderChord(note, type, typeLabels[type], chord);
+  } else {
+    // Use Claude API to describe the chord theory
+    await fetchFromClaude(note, type, typeLabels[type]);
+  }
+}
+
+function renderChord(note, type, typeLabel, chord) {
+  const chordName = `${note} ${typeLabel}`;
+  const diagram = drawChord(chord.frets);
+  const fretsDisplay = chord.frets.map(f => f === -1 ? 'X' : f).join(' ');
+
+  document.getElementById('output').innerHTML = `
+    <div style="margin-bottom: 24px;">
+      <h3 style="color:var(--gold); font-size:1.3rem; margin-bottom:4px;">${chordName}</h3>
+      <p style="color:var(--muted); font-size:0.88rem;">Notes: ${chord.notes.join(' – ')}</p>
+    </div>
+    <div class="chord-grid" style="grid-template-columns: 1fr;">
+      <div class="chord-card" style="max-width: 260px;">
+        <div class="chord-name">${note}${type === 'major' ? '' : type === 'minor' ? 'm' : type}</div>
+        <div class="chord-type">${typeLabel}</div>
+        <div class="chord-diagram">${diagram}</div>
+        <div class="fingers" style="margin-top:12px; color:var(--muted); font-size:0.8rem;">
+          Frets: ${fretsDisplay}
+        </div>
+        <p style="margin-top:14px; font-size:0.88rem; color:#bbb; line-height:1.6;">${chord.desc}</p>
+      </div>
+    </div>
+    <div style="margin-top:32px; background:var(--surface); border-left:3px solid var(--gold); padding:20px; border-radius:4px;">
+      <h4 style="color:var(--gold); margin-bottom:8px; font-size:1rem;">Music Theory</h4>
+      <div id="theorySection"><p style="color:var(--muted)">Loading theory info...</p></div>
+    </div>`;
+
+  fetchTheory(note, type, typeLabel);
+}
+
+async function fetchTheory(note, type, typeLabel) {
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1000,
+        messages: [{
+          role: "user",
+          content: `You are a guitar teacher. Give a short, practical explanation (3-4 sentences, plain text, no markdown) about the ${note} ${typeLabel} chord: when to use it in a song, what songs feature it, and a practice tip. Be specific and helpful for a beginner guitarist.`
+        }]
+      })
+    });
+    const data = await response.json();
+    const text = data.content?.map(b => b.text || '').join('') || "Couldn't load theory info.";
+    document.getElementById('theorySection').innerHTML = `<p style="color:#ccc; line-height:1.7; font-size:0.92rem;">${text}</p>`;
+  } catch {
+    document.getElementById('theorySection').innerHTML = `<p style="color:var(--muted);">Theory info unavailable offline.</p>`;
+  }
+}
+
+async function fetchFromClaude(note, type, typeLabel) {
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1000,
+        messages: [{
+          role: "user",
+          content: `You are a guitar expert. Describe the ${note} ${typeLabel} chord in plain text (no markdown). Include: the notes in the chord, a common fingering or fret positions for 6 strings (use X for muted, 0 for open, numbers for frets), what songs commonly use this chord, and a beginner tip. Keep it to 4-5 sentences total.`
+        }]
+      })
+    });
+    const data = await response.json();
+    const text = data.content?.map(b => b.text || '').join('') || "Could not load chord info.";
+    document.getElementById('output').innerHTML = `
+      <div style="background:var(--surface); border-left:3px solid var(--gold); padding:24px; border-radius:4px; max-width:700px;">
+        <h3 style="color:var(--gold); margin-bottom:12px;">${note} ${typeLabel}</h3>
+        <p style="color:#ccc; line-height:1.8; font-size:0.95rem;">${text}</p>
+      </div>`;
+  } catch {
+    document.getElementById('output').innerHTML = `<p class="status-msg">Couldn't load chord info. Check your connection.</p>`;
+  }
+}
+</script>
+
+</body>
+</html>
