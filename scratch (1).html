@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guitar — Joshua Nathaniel</title>
+  <!-- Custom stylesheet linked from scratch -->
+  <link rel="stylesheet" href="scratch.css" />
+</head>
+<body>
+
+<!-- DIV 1: Navigation -->
+<div class="scratch-nav">
+  <span class="gold-text" style="font-size:1.1rem;">🎸 Joshua's Guitar Page</span>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="app.html">Guitar App</a>
+    <a href="#about">About</a>
+    <a href="#chords">Chords</a>
+    <a href="#video">Watch</a>
+    <a href="#tableau">Data</a>
+  </div>
+</div>
+
+<!-- DIV 2: Hero -->
+<div class="scratch-hero">
+  <h1>🎸 The Guitar</h1>
+  <p>Six strings. Infinite possibilities. My passion for guitar shapes how I think, create, and connect with the world.</p>
+</div>
+
+<!-- DIV 3: Main content -->
+<div class="scratch-content">
+
+  <!-- ON-PAGE ANCHOR TARGET: About -->
+  <div class="scratch-card" id="about">
+    <h2>Why Guitar?</h2>
+    <p>
+      Guitar isn't just a hobby — it's a discipline. Learning to play taught me patience, persistence, and the satisfaction of gradual mastery. The same qualities that make a great guitarist make a great professional: deliberate practice, attention to detail, and the ability to read the room.
+    </p>
+    <!-- IMAGE (not from Bootstrap theme) -->
+    <img
+      class="scratch-img"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/GuitareClassique5.png/440px-GuitareClassique5.png"
+      alt="Classical acoustic guitar"
+    />
+    <p class="muted-text">A classical acoustic guitar — the foundation of most playing styles.</p>
+  </div>
+
+  <!-- SECTION: Learning Path with NESTED LISTS (ordered list containing unordered list) -->
+  <div class="scratch-card" id="chords">
+    <h2>The Guitar Learning Path</h2>
+    <p>Most guitarists follow a progression like this. Each stage unlocks new possibilities:</p>
+
+    <!-- ORDERED LIST containing UNORDERED LISTS (nested as required) -->
+    <ol class="learning-path">
+      <li>
+        <span class="white-text">Open Chords</span> — The starting point for every guitarist.
+        <ul class="guitar-list">
+          <li>E major and E minor</li>
+          <li>A major, A minor, and A7</li>
+          <li>G, C, D — the "campfire" chords</li>
+          <li>F major (the first real challenge)</li>
+        </ul>
+      </li>
+      <li>
+        <span class="white-text">Barre Chords</span> — Movable shapes that unlock the whole fretboard.
+        <ul class="guitar-list">
+          <li>E-shape barre chord</li>
+          <li>A-shape barre chord</li>
+          <li>Minor and dominant 7th variations</li>
+        </ul>
+      </li>
+      <li>
+        <span class="white-text">Scales & Lead Playing</span> — Moving beyond chords.
+        <ul class="guitar-list">
+          <li>Pentatonic minor scale (most used in rock)</li>
+          <li>Major scale and its modes</li>
+          <li>Blues scale</li>
+        </ul>
+      </li>
+      <li>
+        <span class="white-text">Music Theory</span> — Understanding why it works.
+        <ul class="guitar-list">
+          <li>Key signatures and chord families</li>
+          <li>The CAGED system</li>
+          <li>Reading chord charts and tabs</li>
+        </ul>
+      </li>
+    </ol>
+
+    <p>Want to find chords fast? <a href="app.html" class="gold-text">Try my Guitar Chord Finder app →</a></p>
+    <a href="app.html" class="app-btn">Open Chord Finder App</a>
+  </div>
+
+  <!-- ON-PAGE ANCHOR: Video section -->
+  <div class="scratch-card" id="video">
+    <h2>Watch &amp; Learn</h2>
+    <p>Here's one of the best beginner guitar lessons on YouTube — Justin Guitar is legendary for teaching millions of people to play:</p>
+
+    <!-- EMBEDDED YOUTUBE VIDEO -->
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.youtube.com/embed/yoGBJ_G8kJ8"
+        title="Justin Guitar Beginner Course"
+        allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      ></iframe>
+    </div>
+
+    <p class="muted-text">Justin Guitar's beginner course — free, comprehensive, and trusted by millions of players worldwide.</p>
+  </div>
+
+  <!-- ON-PAGE ANCHOR: Tableau section -->
+  <div class="scratch-card" id="tableau">
+    <h2>Guitar's Global Reach — Interactive Data</h2>
+    <p>Music is a global language. The interactive Tableau visualization below explores music trends and data around the world. Use the filters and hover over data points to explore:</p>
+
+    <!-- LIVE TABLEAU EMBED -->
+    <div class="tableau-wrapper">
+      <div class='tableauPlaceholder' id='viz1' style='position: relative; width: 100%; height: 500px;'>
+        <noscript>
+          <a href='#'>
+            <img alt='Music Data Visualization' src='https://public.tableau.com/static/images/Mu/MusicSales_16/Dashboard1/1_rss.png' style='border: none' />
+          </a>
+        </noscript>
+        <object class='tableauViz' style='display:none;'>
+          <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+          <param name='embed_code_version' value='3' />
+          <param name='site_root' value='' />
+          <param name='name' value='WorldMusicListeningTrends/Dashboard1' />
+          <param name='tabs' value='no' />
+          <param name='toolbar' value='yes' />
+          <param name='animate_transition' value='yes' />
+          <param name='display_static_image' value='yes' />
+          <param name='display_spinner' value='yes' />
+          <param name='display_overlay' value='yes' />
+          <param name='display_count' value='yes' />
+          <param name='language' value='en-US' />
+        </object>
+      </div>
+      <script type='text/javascript'>
+        var divElement = document.getElementById('viz1');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        vizElement.style.width = '100%';
+        vizElement.style.height = '500px';
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);
+      </script>
+    </div>
+
+    <p class="muted-text">
+      Note: If the Tableau embed above doesn't display, visit
+      <a href="https://public.tableau.com/app/discover" target="_blank">Tableau Public</a>
+      to browse thousands of free interactive visualizations.
+      <br><br>
+      <strong class="gold-text">Tip for submission:</strong> Replace the Tableau embed above with any public Tableau viz you like — 
+      go to <a href="https://public.tableau.com/app/discover" target="_blank">public.tableau.com</a>, 
+      find a viz, click Share → Copy Embed Code, and paste it here inside the <code>.tableau-wrapper</code> div.
+    </p>
+  </div>
+
+  <!-- Navigation back to main pages -->
+  <div style="text-align:center; padding: 20px 0 40px;">
+    <a href="index.html" class="app-btn" style="margin-right:12px;">← Back to Main Site</a>
+    <a href="app.html" class="app-btn">Guitar Chord App 🎸</a>
+  </div>
+
+</div><!-- end scratch-content -->
+
+<!-- DIV 5: Footer -->
+<div class="scratch-footer">
+  <p>Joshua Nathaniel &mdash; BYU Political Science &mdash; Guitar Enthusiast</p>
+  <p><a href="index.html">Main Site</a> &nbsp;|&nbsp; <a href="app.html">Chord Finder App</a></p>
+</div>
+
+</body>
+</html>

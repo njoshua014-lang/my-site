@@ -1,0 +1,204 @@
+/* Joshua Nathaniel — Scratch Page Stylesheet */
+/* scratch.css — custom stylesheet, linked from scratch.html */
+
+/* === GLOBAL === */
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background-color: #1a1a2e;
+  color: #e0d9cc;
+  margin: 0;
+  padding: 0;
+  line-height: 1.8;
+}
+
+h1, h2, h3 {
+  font-family: 'Trebuchet MS', 'Arial', sans-serif;
+  color: #f0c040;
+  letter-spacing: 0.05em;
+}
+
+a {
+  color: #f0c040;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* === DIVS / LAYOUT BLOCKS === */
+
+/* DIV 1: Top navigation bar */
+.scratch-nav {
+  background-color: #0f0f1a;
+  padding: 14px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid #f0c040;
+}
+
+.scratch-nav a {
+  color: #f0c040;
+  margin-left: 20px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+
+/* DIV 2: Hero / header block */
+.scratch-hero {
+  background-image: linear-gradient(to bottom, #1a1a2e, #0f0f1a);
+  text-align: center;
+  padding: 80px 20px 60px;
+  border-bottom: 1px solid #333;
+}
+
+.scratch-hero h1 {
+  font-size: 3rem;
+  color: #f0c040;
+  margin-bottom: 12px;
+}
+
+.scratch-hero p {
+  color: #aaa;
+  font-size: 1.15rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* DIV 3: Main content area */
+.scratch-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 50px 24px;
+}
+
+/* DIV 4: Section cards */
+.scratch-card {
+  background-color: #22223a;
+  border-left: 4px solid #f0c040;
+  border-radius: 4px;
+  padding: 28px 32px;
+  margin-bottom: 40px;
+}
+
+/* DIV 5: Footer */
+.scratch-footer {
+  background-color: #0f0f1a;
+  text-align: center;
+  padding: 30px;
+  border-top: 2px solid #f0c040;
+  color: #666;
+  font-size: 0.85rem;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+/* === TYPOGRAPHY === */
+
+/* Font color: gold headings */
+.gold-text {
+  color: #f0c040;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+/* Font color: muted subtext */
+.muted-text {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* Font family: monospace for chord names */
+.chord-label {
+  font-family: 'Courier New', Courier, monospace;
+  color: #f0c040;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* Font color: white emphasis */
+.white-text {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Unordered / ordered lists */
+ul.guitar-list {
+  list-style: disc;
+  padding-left: 24px;
+  color: #ccc;
+}
+
+ol.learning-path {
+  padding-left: 24px;
+  color: #e0d9cc;
+}
+
+ol.learning-path li {
+  margin-bottom: 10px;
+}
+
+/* Image styling */
+.scratch-img {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 4px;
+  border: 2px solid #f0c040;
+  display: block;
+  margin: 20px auto;
+}
+
+/* YouTube embed wrapper */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border: 2px solid #f0c040;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+
+/* Tableau embed */
+.tableau-wrapper {
+  border: 2px solid #f0c040;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+/* Anchor target highlight */
+:target {
+  scroll-margin-top: 80px;
+}
+
+/* App link button */
+.app-btn {
+  display: inline-block;
+  background: #f0c040;
+  color: #1a1a2e;
+  padding: 12px 28px;
+  border-radius: 3px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+
+.app-btn:hover {
+  background: #d4a820;
+  color: #0f0f1a;
+  text-decoration: none;
+}
